@@ -18,3 +18,14 @@ class TerminalScreen:
         self.is_screen_initialized = True
         print(f"Screen initialized: {width}x{height}, color mode: {color_mode}")
 
+    def draw_character(self, x, y, color, char):
+        #draws a character at a specific position
+        if not self.is_screen_initialized:
+            print("screen not initialized. the command is ignored")
+            return
+
+        if 0<= x < self.width and 0 <= y < self.height:
+            self.screen_data[y][x] = chr(char)
+            print(f"Character '{chr(char)}' drawn at ({x}, {y}) with color {color}.")
+        else:
+            print(f"Invalid coordinates ({x}, {y}). command ignored")
