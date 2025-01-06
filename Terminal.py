@@ -29,3 +29,32 @@ class TerminalScreen:
             print(f"Character '{chr(char)}' drawn at ({x}, {y}) with color {color}.")
         else:
             print(f"Invalid coordinates ({x}, {y}). command ignored")
+
+    def draw_line(self, x1, y1, x2, y2, color, char):
+        # drawing a line between two pints using a specific character"
+        if not self.is_screen_initialized:
+            print("screen not initialized. command ignores!!!")
+            return
+
+        # bresenham's line algorithm for drawing
+        dx = abs(x2 - x1)
+        dy = abs(y2 - y1)
+        sx = 1 if x1 < x2 else -1
+        sy = 1 if y1 < y2 else -1
+        err = dx - dy
+
+        while True:
+            if 0 <= x1 < self.width and 0 <= y1 < self.height:
+                self.screen_data[y1][x1] = chr(char)
+
+            if x1 == x2 and y1 == y2:
+                break
+            e2 = 2 * err
+            if e2 > -dy:
+                err -= dy
+                x1 += sx
+            if e2 < dx:
+                err += dx
+                y1 += sy
+
+        print(f"line drawn from({x1},{y1} to {x2},{y2}) with color {color} and character '{chr(char)}'.")
